@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rules of Inference</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <h1>Rules of Inference</h1>
+  
+  <div id="input">
+    <h2>Hypotheses:</h2>
+    <textarea id="hypotheses" rows="5" cols="50"></textarea>
+    <button onclick="applyInference()">Apply Inference</button>
+  </div>
+  
+  <div id="output">
+    <h2>Conclusion:</h2>
+    <p id="conclusion"></p>
+    <p id="validity"></p>
+  </div>
+  
+  <script src="script.js"></script>
+  <script>
+    function applyInference() {
+      var hypotheses = document.getElementById('hypotheses').value;
+
+      // Convert hypotheses to propositional logic
+      var logicStatement = convertToLogic(hypotheses);
+
+      // Apply rules of inference
+      var conclusion = applyRules(logicStatement);
+
+      // Convert conclusion to letter format
+      var conclusionText = convertToText(conclusion);
+
+      // Display conclusion
+      var conclusionElement = document.getElementById('conclusion');
+      conclusionElement.textContent = conclusionText;
+
+      // Check validity
+      var validityElement = document.getElementById('validity');
+      if (conclusionText === "Ali will not get the job") {
+        validityElement.textContent = "Valid";
+      } else {
+        validityElement.textContent = "Not Valid";
+      }
+    }
+
+    function convertToLogic(hypotheses) {
+  // Convert hypotheses to propositional logic
+  // Example implementation:
+  var logicStatements = [];
+
+  if (hypotheses.includes("Ali works hard")) {
+    logicStatements.push("A");
+  }
+  if (hypotheses.includes("If Ali works hard then he is a dull boy")) {
+    logicStatements.push("A -> B");
+  }
+  if (hypotheses.includes("If Ali is a dull boy then he will not get the job")) {
+    logicStatements.push("B -> ¬C");
+  }
+
+  var logicResult = logicStatements.join(" AND ");
+
+  return logicResult;
+    }
+
+function applyRules(logicStatement) {
+  // Apply the 8 rules of inference to the propositional logic
+
+  // Rule 1: Modus Ponens (MP)
+  if (logicStatement.includes("A AND (A -> B)")) {
+    logicStatement = logicStatement.replace("A AND (A -> B)", "B");
+  }
+
+  // Rule 2: Modus Tollens (MT)
+  if (logicStatement.includes("(A -> B) AND ¬B")) {
+    logicStatement = logicStatement.replace("(A -> B) AND ¬B", "¬A");
+  }
+
+  // Rule 3: Hypothetical Syllogism (HS)
+  if (logicStatement.includes("(A -> B) AND (B -> ¬C)")) {
+    logicStatement = logicStatement.replace("(A -> B) AND (B -> ¬C)", "A -> ¬C");
+  }
+
+  // Rule 4: Disjunctive Syllogism (DS)
+  if (logicStatement.includes("A OR B") && logicStatement.includes("¬A")) {
+    logicStatement = logicStatement.replace("A OR B", "B");
+  }
+
+  // Rule 5: Constructive Dilemma (CD)
+  if (logicStatement.includes("(A OR B) AND (A -> C) AND (B -> D)")) {
+    logicStatement = logicStatement.replace("(A OR B) AND (A -> C) AND (B -> D)", "(C OR D)");
+  }
+
+  // Rule 6: Simplification (SIMP)
+  if (logicStatement.includes("A AND B")) {
+    logicStatement = logicStatement.replace("A AND B", "A");
+  }
+
+  // Rule 7: Conjunction (CONJ)
+  if (logicStatement.includes("A") && logicStatement.includes("B")) {
+    logicStatement = logicStatement.replace("A", "A AND B");
+  }
+
+  // Rule 8: Addition (ADD)
+  if (logicStatement.includes("A")) {
+    logicStatement = logicStatement.replace("A", "A OR B");
+  }
+
+  return logicStatement;
+}
+ 
+function convertToText(conclusion) {
+  // Convert conclusion to letter format
+  // Example implementation:
+  if (conclusion.includes("C")) {
+    return "Ali will not get the job";
+  } else {
+    return "Unknown conclusion";
+  }
+}
+
+
+  </script>
+</body>
+</html>

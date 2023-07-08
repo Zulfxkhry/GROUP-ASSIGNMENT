@@ -1,0 +1,31 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  #input {
+    margin-bottom: 20px;
+  }
+  
+  #output {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  textarea {
+    width: 100%;
+  }
+  
+  button {
+    padding: 5px 10px;
+    margin-top: 10px;
+  }
+  
+  #validity {
+    font-weight: bold;
+  }
+  
